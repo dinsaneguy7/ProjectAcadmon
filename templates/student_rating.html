@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rate {{ student.first_name }} {{ student.last_name }} | Academic Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --text: #2b2d42;
+            --text-light: #6c757d;
+            --border: #e9ecef;
+            --bg: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 0 2rem;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar-title i {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .navbar-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        /* Main Container - Original Rating Styles (unchanged) */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 15px;
+            margin: 0 0 12px 0;
+            color: var(--text);
+        }
+
+        .student-name {
+            color: var(--primary-dark);
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .subject-card {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .rating-group {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .rating-label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .rating-slider {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            margin-right: 8px;
+        }
+
+        .rating-slider:hover {
+            opacity: 1;
+        }
+
+        .rating-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .rating-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .complaints-group textarea {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            min-height: calc(3 * 1.4 * 13px);
+            max-height: calc(3 * 1.4 * 13px);
+            line-height: 1.4;
+            resize: none;
+            overflow-y: auto;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: #fff;
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-about p {
+            color: #adb5bd;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        
+        .footer-link-list {
+            list-style: none;
+        }
+        
+        .footer-link-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-link {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-link:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1rem;
+                height: 60px;
+            }
+            
+            .navbar-title {
+                font-size: 1.2rem;
+            }
+            
+            .navbar-links {
+                gap: 0.5rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                margin: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar animate__animated animate__fadeInDown">
+        <div class="navbar-title">
+            <i class="fas fa-graduation-cap"></i>
+            Academic Monitor
+        </div>
+        <div class="navbar-links">
+            <a href="{% url 'dashboard' %}" class="nav-link">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+            <a href="{% url 'class_list' %}" class="nav-link">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Classes
+            </a>
+            <a href="{% url 'teachers_list' %}" class="nav-link">
+                <i class="fas fa-user-tie"></i>
+                Teachers
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-users"></i>
+                Students
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="{% url 'class_detail' class_obj.id %}" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Class
+        </a>
+        <h1>Rate <span class="student-name">{{ student.first_name }} {{ student.last_name }}</span></h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="subjects-grid">
+                {% for subject, form in rating_forms %}
+                <div class="subject-card">
+                    <div class="subject-name">{{ subject.name }}</div>
+                    {% for field in form.visible_fields %}
+                    {% if field.name != 'complaints' %}
+                    <div class="rating-group">
+                        <label class="rating-label">{{ field.label }}</label>
+                        <div class="rating-container">
+                            <input type="range" min="0" max="5" step="1" name="{{ field.html_name }}"
+                                id="{{ field.html_name }}" value="{{ field.value|default:0 }}" class="rating-slider">
+                            <span class="slider-value" id="value_{{ field.html_name }}" style="visibility:hidden;"></span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="complaints-group">
+                        <label class="rating-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="submit-btn">Submit Ratings</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo animate__animated animate__fadeIn">
+                    <i class="fas fa-graduation-cap"></i> Academic Monitor
+                </div>
+                <p class="animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+                    A comprehensive platform for tracking and analyzing academic performance metrics to enhance learning outcomes.
+                </p>
+                <div class="social-links">
+                    <a href="https://facebook.com/dinsaneguy.71" class="social-link animate__animated animate__fadeIn" style="animation-delay: 0.2s;" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/dmaniac5age/" class="social-link animate__animated animate__fadeIn" style="animation-delay: 0.3s;" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link animate__animated animate__fadeIn" style="animation-delay: 0.4s;" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-links animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                <h4>Quick Links</h4>
+                <ul class="footer-link-list">
+                    <li><a href="{% url 'dashboard' %}" class="footer-link"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+                    <li><a href="{% url 'class_list' %}" class="footer-link"><i class="fas fa-chevron-right"></i> Classes</a></li>
+                    <li><a href="{% url 'teachers_list' %}" class="footer-link"><i class="fas fa-chevron-right"></i> Teachers</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Students</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
+                <h4>Contact Us</h4>
+                <ul class="footer-link-list">
+                    <li><a href="mailto:info@academicmonitor.com" class="footer-link"><i class="fas fa-envelope"></i> info@academicmonitor.com</a></li>
+                    <li><a href="tel:+1234567890" class="footer-link"><i class="fas fa-phone"></i> +1 (234) 567-890</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> 123 Education St, Campus City</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
+            &copy; {% now "Y" %} Vinay Poudyal. All rights reserved. | 
+            <a href="{% url 'privacy_policy' %}" class="footer-link">Privacy Policy</a> | 
+            <a href="{% url 'terms_conditions' %}" class="footer-link">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <script>
+        // Update displayed value for sliders and show value only after interaction
+        document.querySelectorAll('.rating-slider').forEach(slider => {
+            const valueDisplay = document.getElementById('value_' + slider.id);
+            slider.addEventListener('input', function () {
+                valueDisplay.innerText = this.value;
+                valueDisplay.style.visibility = 'visible';
+            });
+        });
+
+        // Initialize all complaint textareas
+        document.querySelectorAll('.complaints-group textarea').forEach(ta => {
+            ta.style.height = 'calc(3 * 1.4 * 13px)';
+            ta.style.maxHeight = 'calc(3 * 1.4 * 13px)';
+            ta.setAttribute('rows', '3');
+        });
+    </script>
+</body>
+</html>
