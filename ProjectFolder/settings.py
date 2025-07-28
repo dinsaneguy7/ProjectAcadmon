@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "MyApp",  
+    "cadmin"
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'ProjectFolder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'MyApp' / 'templates', BASE_DIR / 'cadmin' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'ProjectFolder.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Thetest',
+        'USER': 'postgres',
+        'PASSWORD': 'M@n1@c5age',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -114,19 +119,23 @@ USE_TZ = True
 
 
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://academymonitor.onrender.com",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://academymonitor.onrender.com",
+# ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [BASE_DIR / 'static']
+# Static files directories for MyApp and cadmin
+STATICFILES_DIRS = [
+    BASE_DIR / 'MyApp' / 'static',
+    BASE_DIR / 'cadmin' / 'static',
+]
 
 # Media files (uploads)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR  # Save uploads directly in project root
+MEDIA_ROOT = BASE_DIR/ 'media'  # Save uploads directly in project root
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

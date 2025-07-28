@@ -1,0 +1,17 @@
+/* Admin Dashboard CSS */
+/* Add custom styles for admin dashboard here if needed. */
+
+/* Example: highlight active time period button */
+.bg-indigo-600.text-white {
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.class-card {
+    transition: box-shadow 0.3s;
+}
+
+.class-card:hover {
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.18);
+}
+
+/* You can add more custom styles as needed for dashboard cards, charts, etc. */

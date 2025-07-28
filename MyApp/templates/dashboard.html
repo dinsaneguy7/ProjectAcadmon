@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Performance Dashboard</h1>
+    
+    <div class="dashboard-grid">
+        <!-- Summary Cards -->
+        <div class="summary-card card-1">
+            <div class="card-icon">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="card-content">
+                <h3>Classes</h3>
+                <p class="card-value">{{ class_count }}</p>
+            </div>
+        </div>
+        
+        <div class="summary-card card-2">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="card-content">
+                <h3>Students</h3>
+                <p class="card-value">{{ student_count }}</p>
+            </div>
+        </div>
+        
+        <div class="summary-card card-3">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="card-content">
+                <h3>Avg. Rating</h3>
+                <p class="card-value">{{ avg_rating|floatformat:1 }}/5</p>
+            </div>
+        </div>
+        
+        <div class="summary-card card-4">
+            <div class="card-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="card-content">
+                <h3>This Month</h3>
+                <p class="card-value">{{ monthly_evaluations }}</p>
+            </div>
+        </div>
+        
+        <!-- Main Performance Chart -->
+        <div class="performance-chart-container">
+            <div class="chart-header">
+                <h2>Class Performance Trend</h2>
+                <div class="chart-controls">
+                    <select id="timeRange" class="chart-select">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 3 Months</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                    <button id="refreshChart" class="chart-button">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <canvas id="performanceChart"></canvas>
+        </div>
+        
+        <!-- Subject-wise Performance -->
+        <div class="subject-chart-container">
+            <div class="chart-header">
+                <h2>Subject-wise Performance</h2>
+                <div class="chart-controls">
+                    <select id="classFilter" class="chart-select">
+                        <option value="all">All Classes</option>
+                        {% for class in classes %}
+                        <option value="{{ class.id }}">{{ class.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <canvas id="subjectChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

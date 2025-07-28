@@ -3,6 +3,36 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Virtualenv
+Env/
+venv/
+ENV/
+
+# Environment
+.env
+.env.*
+*.env
+
+# Media & Static
+#student_images/
+#teacher_images/
+#media/
+
+# Node
+node_modules/
+
+# Backup files
+*~
+*.bak
+*.tmp
+
+# Django migrations (optional)
+**/migrations/
+**/migrations/*.pyc
+**/migrations/*.pyo
+**/migrations/*.pyd
+**/migrations/*.py
+
 # C extensions
 *.so
 
@@ -32,11 +62,6 @@ var/
 *.db
 *.sqlite3
 
-# Media and uploads
-/media/
-
-# Static files
-/static/
 
 # VS Code
 .vscode/

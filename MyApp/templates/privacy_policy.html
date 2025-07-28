@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Privacy Policy | AcadMon{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 shadow rounded">
+    <div class="border-b border-primary-600 pb-4 mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-end">
+        <h1 class="text-2xl font-bold text-primary-800">Privacy Policy</h1>
+        <p class="text-sm text-gray-500">Effective: {% now "F j, Y" %}</p>
+    </div>
+
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-6 text-sm">
+        <strong class="text-yellow-700">IMPORTANT:</strong> This Privacy Policy governs the collection, use, and protection of your personal data within AcadMon. By using this platform, you consent to the practices described herein.
+    </div>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mb-2">1. Definitions</h2>
+    <p><strong>"Platform"</strong> refers to the AcadMon software system.</p>
+    <p><strong>"Data Controller"</strong> refers to Vinay Poudyal, the creator and owner of AcadMon.</p>
+    <p><strong>"User"</strong> refers exclusively to Puja Poudyal, the authorized user of this platform.</p>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">2. Data Collection Principles</h2>
+    <ul class="list-disc list-inside mb-4">
+        <li>Collection limited to necessary academic data</li>
+        <li>Transparent about what data is collected</li>
+        <li>No collection of sensitive personal information beyond educational requirements</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">3. Types of Data Collected</h2>
+    <ul class="list-disc list-inside mb-4">
+        <li><strong>Student Information:</strong> Names, academic records, performance evaluations</li>
+        <li><strong>Educational Data:</strong> Grades, attendance, participation metrics</li>
+        <li><strong>Operational Data:</strong> System usage logs (for maintenance purposes only)</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">4. Purpose of Data Processing</h2>
+    <ul class="list-disc list-inside mb-4">
+        <li>Academic performance tracking and analysis</li>
+        <li>Educational progress monitoring</li>
+        <li>Classroom management and reporting</li>
+        <li>System maintenance and improvement</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">5. Data Protection Measures</h2>
+    <ul class="list-disc list-inside mb-4">
+        <li>Secure access controls</li>
+        <li>Data encryption where appropriate</li>
+        <li>Regular system security assessments</li>
+    </ul>
+
+    <div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6 text-sm">
+        <strong class="text-red-700">DATA PROTECTION WARNING:</strong> Unauthorized access to this system or its data is strictly prohibited under Nepal's Electronic Transactions Act, 2063 and may result in legal action.
+    </div>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">6. Data Retention Policy</h2>
+    <p>Personal data is retained only for as long as necessary to fulfill the purposes outlined in this policy, or as required by educational record-keeping standards in Nepal.</p>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">7. User Rights</h2>
+    <ul class="list-disc list-inside mb-4">
+        <li>Request access to their data</li>
+        <li>Request correction of inaccurate data</li>
+        <li>Request deletion of data when no longer necessary</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">8. Governing Law</h2>
+    <ul class="list-disc list-inside mb-4">
+        <li>The Electronic Transactions Act, 2063</li>
+        <li>The Privacy Act, 2075</li>
+        <li>Relevant education sector regulations</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">9. Amendments</h2>
+    <p>This policy may be updated periodically. Users will be notified of significant changes through the Platform interface.</p>
+
+    <h2 class="text-xl font-semibold text-primary-700 border-l-4 border-pink-500 pl-4 mt-6 mb-2">10. Contact Information</h2>
+    <p>For privacy-related inquiries or requests, please contact:</p>
+    <p><strong>Vinay Poudyal</strong><br>
+    Email: <a href="mailto:dlunaticvinay@gmail.com" class="text-primary-700 underline">dlunaticvinay@gmail.com</a></p>
+
+    <p class="text-sm text-gray-500 mt-4"><strong>Last Updated:</strong> {% now "F j, Y" %}</p>
+</div>
+{% endblock %}

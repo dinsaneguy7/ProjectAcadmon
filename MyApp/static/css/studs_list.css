@@ -1,0 +1,251 @@
+/* Student List Container */
+.studs-list-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.studs-list-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    padding-left: 0.5rem;
+}
+
+/* Student Grid Layout */
+.studs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+/* Student Card Styles */
+.studs-card {
+    display: block;
+    transition: all 0.3s ease;
+    width: 280px;
+    margin-bottom: 1.5rem;
+}
+
+.studs-card-inner {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    height: 100%;
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.studs-card:hover .studs-card-inner {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: #d1d5db;
+}
+
+/* Student Header */
+.studs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.studs-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.studs-id {
+    background-color: #ecfdf5;
+    color: #059669;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+}
+
+/* Student Info */
+.studs-info {
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.info-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.info-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+/* Progress Circle */
+.progress-circle-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.progress-circle {
+    width: 120px;
+    height: 120px;
+}
+
+.progress-circle svg {
+    width: 100%;
+    height: 100%;
+}
+
+.progress-segment {
+    fill: none;
+    stroke-width: 3.5;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dasharray 0.8s ease;
+}
+
+.progress-segment:nth-child(1) {
+    stroke: #10b981;
+}
+
+.progress-segment:nth-child(2) {
+    stroke: #34d399;
+}
+
+.progress-segment:nth-child(3) {
+    stroke: #6ee7b7;
+}
+
+.progress-segment:nth-child(4) {
+    stroke: #a7f3d0;
+}
+
+.progress-text {
+    font-size: 0.55rem;
+    font-weight: 700;
+    fill: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Topic List */
+.topic-list {
+    margin-top: 1.5rem;
+}
+
+.topic-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.topic-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.topic-name {
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.topic-percentage {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #10b981;
+}
+
+.topic-percentage.low-percentage {
+    color: #ef4444;
+}
+
+/* Student Actions */
+.studs-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    gap: 0.75rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.view-btn {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+    flex: 1;
+}
+
+.view-btn:hover {
+    background-color: #c7d2fe;
+}
+
+.rate-btn {
+    background-color: #4f46e5;
+    color: white;
+    flex: 1;
+}
+
+.rate-btn:hover {
+    background-color: #4338ca;
+}
+
+.action-btn i {
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .studs-grid {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 900px) {
+    .studs-card {
+        width: calc(50% - 1.5rem);
+    }
+}
+
+@media (max-width: 600px) {
+    .studs-card {
+        width: 100%;
+    }
+    
+    .studs-list-container {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .studs-card-inner {
+        padding: 1.25rem;
+    }
+}

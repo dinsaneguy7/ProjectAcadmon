@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Class List | AcadMon{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/classlist.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="class-list-container">
+    <h1 class="class-list-title">Class List</h1>
+    
+    <div class="class-grid">
+        {% for class in classes %}
+        <a href="{% url 'subj_list' %}?class_id={{ class.id }}" class="class-card">
+            <div class="class-card-inner">
+                <div class="class-header">
+                    <h3 class="class-name">{{ class.name }}</h3>
+                    <span class="student-count">{{ class.student_count }} students</span>
+                </div>
+                <div class="progress-circle-container">
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36">
+                            {% for topic in class.topics %}
+                            <circle 
+                                class="progress-segment"
+                                stroke-dasharray="{{ topic.percentage }}, 100"
+                                stroke-dashoffset="{{ topic.offset }}"
+                                cx="18" 
+                                cy="18" 
+                                r="15.9155"
+                            />
+                            {% endfor %}
+                            <text x="18" y="20" text-anchor="middle" class="progress-text">
+                                {{ class.average }}%
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="topic-list">
+                    {% for topic in class.topics %}
+                    <div class="topic-item">
+                        <span class="topic-name">{{ topic.name }}</span>
+                        <span class="topic-percentage {% if topic.percentage < 25 %}low-percentage{% endif %}">
+                            {{ topic.percentage }}%
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/classlist.js' %}"></script>
+{% endblock %}

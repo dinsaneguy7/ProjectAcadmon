@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Student List | AcadMon{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/studs_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="studs-list-container">
+    <h1 class="studs-list-title">Student List</h1>
+    
+    <div class="studs-grid">
+        {% for stud in studs %}
+        <div class="studs-card">
+            <div class="studs-card-inner">
+                <div class="studs-header">
+                    <h3 class="studs-name">{{ stud.first_name }} {{ stud.last_name }}</h3>
+                    <span class="studs-id">ID: {{ stud.id }}</span>
+                </div>
+                
+                <div class="studs-info">
+                    <div class="info-item">
+                        <span class="info-label">Class:</span>
+                        <span class="info-value">{{ stud.class_name }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Roll No:</span>
+                        <span class="info-value">{{ stud.roll_number }}</span>
+                    </div>
+                </div>
+                
+                <div class="progress-circle-container">
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36">
+                            {% for topic in stud.topics %}
+                            <circle 
+                                class="progress-segment"
+                                stroke-dasharray="{{ topic.percentage }}, 100"
+                                stroke-dashoffset="{{ topic.offset }}"
+                                cx="18" 
+                                cy="18" 
+                                r="15.9155"
+                            />
+                            {% endfor %}
+                            <text x="18" y="20" text-anchor="middle" class="progress-text">
+                                {{ stud.average }}%
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="topic-list">
+                    {% for topic in stud.topics %}
+                    <div class="topic-item">
+                        <span class="topic-name">{{ topic.name }}</span>
+                        <span class="topic-percentage {% if topic.percentage < 25 %}low-percentage{% endif %}">
+                            {{ topic.percentage }}%
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="studs-actions">
+                    <a href="{% url 'view_rate' stud.id %}?subj_id={{ request.GET.subj_id }}" class="action-btn view-btn">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <a href="{% url 'rate_studs' stud.id %}?subj_id={{ request.GET.subj_id }}" class="action-btn rate-btn">
+                        <i class="fas fa-star"></i> Rate
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/studs_list.js' %}"></script>
+{% endblock %}

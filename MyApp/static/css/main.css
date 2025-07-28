@@ -1,0 +1,208 @@
+/* Base Styles */
+.header {
+    background-color: #3730a3;
+    color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    color: white;
+    transition: color 0.2s;
+}
+
+.logo:hover {
+    color: #a5b4fc;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: none;
+    gap: 1rem;
+}
+
+.nav-link {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    background-color: #4338ca;
+}
+
+/* Auth Container */
+.auth-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-link {
+    display: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+    align-items: center;
+}
+
+.auth-button {
+    background-color: #4f46e5;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.auth-button:hover {
+    background-color: #4338ca;
+}
+
+.mobile-menu-button {
+    display: flex;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.mobile-menu-button:hover {
+    background-color: #4338ca;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    background-color: #4338ca;
+}
+
+.mobile-menu-content {
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.mobile-nav-link:hover {
+    background-color: #3730a3;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+/* Footer */
+.footer {
+    background-color: #1f2937;
+    color: white;
+    padding: 2rem 0;
+}
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-heading {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 0.25rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-link {
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+    font-size: 0.875rem;
+}
+
+.footer-link:hover {
+    color: #a5b4fc;
+}
+
+.footer-about {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-copyright {
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+/* Media Queries */
+@media (min-width: 640px) {
+    .profile-link {
+        display: flex;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-menu-button {
+        display: none;
+    }
+
+    .desktop-nav {
+        display: flex;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Subj List | AcadMon{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/subjectlist.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="subject-list-container">
+    <h1 class="subject-list-title">Subj List</h1>
+    <div class="subject-grid">
+        {% for subj in subjs %}
+        <a href="{% url 'studs_list' %}?subj_id={{ subj.id }}" class="subject-card">
+            <div class="subject-card-inner">
+                <div class="subject-header">
+                    <h3 class="subject-name">{{ subj.name }}</h3>
+                    <span class="class-count">{{ subj.class_count }} classes</span>
+                </div>
+                <div class="progress-circle-container">
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36">
+                            {% for topic in subj.topics %}
+                            <circle 
+                                class="progress-segment"
+                                stroke-dasharray="{{ topic.percentage }}, 100"
+                                stroke-dashoffset="{{ topic.offset }}"
+                                cx="18" 
+                                cy="18" 
+                                r="15.9155"
+                            />
+                            {% endfor %}
+                            <text x="18" y="20" text-anchor="middle" class="progress-text">
+                                {{ subj.average }}%
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="topic-list">
+                    {% for topic in subj.topics %}
+                    <div class="topic-item">
+                        <span class="topic-name">{{ topic.name }}</span>
+                        <span class="topic-percentage {% if topic.percentage < 25 %}low-percentage{% endif %}">
+                            {{ topic.percentage }}%
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="teacher-info">
+                    <span class="teacher-label">Teacher:</span>
+                    <span class="teacher-name">{{ subj.teacher_name }}</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/subjectlist.js' %}"></script>
+{% endblock %}

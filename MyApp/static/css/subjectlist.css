@@ -1,0 +1,205 @@
+/* Subject List Container */
+.subject-list-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.subject-list-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    padding-left: 0.5rem;
+}
+
+/* Subject Grid Layout */
+.subject-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+/* Subject Card Styles */
+.subject-card {
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 280px;
+    margin-bottom: 1.5rem;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+}
+
+.subject-card-inner {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    height: 100%;
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.subject-card:hover .subject-card-inner {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: #d1d5db;
+}
+
+/* Subject Header */
+.subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.subject-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.class-count {
+    background-color: #e0e7ff;
+    color: #4338ca;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+}
+
+/* Progress Circle */
+.progress-circle-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.progress-circle {
+    width: 120px;
+    height: 120px;
+}
+
+.progress-circle svg {
+    width: 100%;
+    height: 100%;
+}
+
+.progress-segment {
+    fill: none;
+    stroke-width: 3.5;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dasharray 0.8s ease;
+}
+
+.progress-segment:nth-child(1) {
+    stroke: #7c3aed;
+}
+
+.progress-segment:nth-child(2) {
+    stroke: #8b5cf6;
+}
+
+.progress-segment:nth-child(3) {
+    stroke: #a78bfa;
+}
+
+.progress-segment:nth-child(4) {
+    stroke: #c4b5fd;
+}
+
+.progress-text {
+    font-size: 0.55rem;
+    font-weight: 700;
+    fill: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Topic List */
+.topic-list {
+    margin-top: 1.5rem;
+}
+
+.topic-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.topic-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.topic-name {
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.topic-percentage {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+.topic-percentage.low-percentage {
+    color: #ef4444;
+}
+
+/* Teacher Info */
+.teacher-info {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+}
+
+.teacher-label {
+    color: #6b7280;
+    margin-right: 0.5rem;
+}
+
+.teacher-name {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .subject-grid {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 900px) {
+    .subject-card {
+        width: calc(50% - 1.5rem);
+    }
+}
+
+@media (max-width: 600px) {
+    .subject-card {
+        width: 100%;
+    }
+    
+    .subject-list-container {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .subject-card-inner {
+        padding: 1.25rem;
+    }
+}

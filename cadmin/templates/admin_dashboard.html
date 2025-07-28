@@ -1,0 +1,103 @@
+{% extends "basead.html" %}
+{% load static %}
+{% block title %}Admin Dashboard | AcadMon{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- School Performance Graph -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">School Performance Over Time</h2>
+        <div class="relative h-96">
+            <canvas id="schoolPerformanceChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Dashboard Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Class Performance Dashboard</h1>
+        <p class="mt-2 text-lg text-gray-600">Overview of all classes with performance metrics</p>
+        
+        <!-- Time Period Filter -->
+        <div class="mt-4 flex items-center space-x-4">
+            <span class="text-sm font-medium text-gray-700">Time Period:</span>
+            <div class="flex space-x-2">
+                <button id="lastMonthBtn" class="px-3 py-1 bg-indigo-600 text-white text-sm rounded-md">Last Month</button>
+                <button id="lastQuarterBtn" class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded-md hover:bg-gray-300">Last Quarter</button>
+                <button id="allTimeBtn" class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded-md hover:bg-gray-300">All Time</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Class Performance Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for class in classes %}
+        <a href="#" class="class-card group">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col hover:shadow-lg transition-shadow duration-300 border border-gray-200">
+                <!-- Class Header -->
+                <div class="{{ class.header_color }} px-4 py-3">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">{{ class.name }}</h3>
+                            <p class="text-indigo-200">Class Teacher: {{ class.teacher_name }}</p>
+                        </div>
+                        <span class="bg-white text-indigo-700 px-2 py-1 rounded-md text-sm font-semibold">{{ class.student_count }} Students</span>
+                    </div>
+                </div>
+                <!-- Performance Summary -->
+                <div class="p-4 flex-grow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-sm text-gray-500">Overall Rating</span>
+                            <div class="flex items-center">
+                                <span class="text-2xl font-bold mr-2">{{ class.overall_rating }}</span>
+                                <span class="text-green-500 text-sm flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                    {{ class.rating_change }}% ↑
+                                </span>
+                            </div>
+                        </div>
+                        <div class="w-20 h-20">
+                            <canvas id="classChart{{ forloop.counter }}"></canvas>
+                        </div>
+                    </div>
+                    <!-- Rating Criteria Breakdown -->
+                    <div class="space-y-3">
+                        {% for crit in class.criteria %}
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>{{ crit.name }}</span>
+                                <span class="font-medium">{{ crit.value }}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: {{ crit.percent }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Footer with View Details Link -->
+                <div class="px-4 py-3 bg-gray-50 border-t border-gray-200">
+                    <div class="text-sm text-indigo-600 group-hover:text-indigo-800 flex items-center justify-between">
+                        <span>View detailed analytics</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Chart.js for the mini charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/class_dashboard.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<script src="{% static 'js/admin.js' %}"></script>
+{% endblock %}

@@ -9,10 +9,19 @@ class UnauthenticatedRedirectMiddleware:
     def __call__(self, request):
         # Allow access to login, logout, unauth, static, and admin pages
         allowed_paths = [reverse('login'), reverse('logout'), '/unauth/', '/admin/', '/static/']
+        # Restrict teachers from accessing /admin/ and /cadmin/ (but do not block non-admins from all pages)
+        role = request.session.get('role')
+        # Block all non-admins from /cadmin/ (only allow staff/superuser)
+        if request.path.startswith('/cadmin/'):
+            if not (request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser)):
+                return redirect(reverse('dashboard'))
+        # Restrict teachers from /admin/ as well
+        if role == 'teacher' and request.path.startswith('/admin/'):
+            return redirect(reverse('dashboard'))
         # Always allow full interaction with login page
         if request.path == reverse('login') or request.path.startswith('/static/') or request.path.startswith('/admin/') or request.path == '/unauth/':
             return self.get_response(request)
-        # If user is not authenticated
+        # Only block if user is unauthenticated (not if not admin)
         if not request.user.is_authenticated:
             # If permanent unauth cookie is set, always redirect
             if request.COOKIES.get('blocked_unauth') == '1':

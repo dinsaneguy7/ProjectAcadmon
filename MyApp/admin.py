@@ -1,9 +1,10 @@
 
 from django.contrib import admin
-from .models import Student, Teacher, ClassRoom, ClassSubject,StudentSubjectRating
+from .models import Teacher, Class, Student, Subject, RatingTitle, StudentRating
 
-admin.site.register(Student)
 admin.site.register(Teacher)
-admin.site.register(ClassRoom)
-admin.site.register(ClassSubject)
-admin.site.register(StudentSubjectRating)
+admin.site.register(Class)
+admin.site.register(Student)
+admin.site.register(Subject)
+admin.site.register(RatingTitle)
+admin.site.register(StudentRating)

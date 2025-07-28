@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Rate Student | AcadMon{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/rater.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="rater-container">
+    <div class="rater-header">
+        <h1>Rate Student</h1>
+        <div class="student-info">
+            <h2>{{ stud.firstname }} {{ stud.lastname }}</h2>
+            <div class="meta-info">
+                <span>Class: {{ stud.student_class.name }}</span>
+                <span>Roll No: {{ stud.roll_no }}</span>
+                <span>Subject: {{ subject.name }}</span>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" class="rating-form">
+        {% csrf_token %}
+        <input type="hidden" name="subject_id" value="{{ subject.id }}">
+        <input type="hidden" name="student_id" value="{{ stud.id }}">
+
+        <div class="rating-categories">
+            {% for title in rating_titles %}
+            <div class="rating-category">
+                <div class="category-header">
+                    <h3>{{ title.rating_title }}</h3>
+                    <span class="rating-value-display" id="value-{{ title.id }}">
+                        {% if existing_ratings|get_item:title.id %}{{ existing_ratings|get_item:title.id }}{% else %}0{% endif %}
+                    </span>
+                </div>
+                
+                {% if title.method == 'numerical' %}
+                <div class="slider-container">
+                    <input type="range" 
+                           class="rating-slider"
+                           id="slider-{{ title.id }}"
+                           name="rating-{{ title.id }}"
+                           min="{{ title.floor }}"
+                           max="{{ title.ceiling }}"
+                           step="1"
+                           value="{% if existing_ratings|get_item:title.id %}{{ existing_ratings|get_item:title.id }}{% else %}{{ title.floor }}{% endif %}">
+                    <div class="slider-labels">
+                        <span>{{ title.floor }} (Min)</span>
+                        <span>{{ title.ceiling }} (Max)</span>
+                    </div>
+                </div>
+                {% else %}
+                <textarea name="rating-{{ title.id }}" 
+                          placeholder="Enter your evaluation...">{% if existing_ratings|get_item:title.id %}{{ existing_ratings|get_item:title.id }}{% endif %}</textarea>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">Save Ratings</button>
+            <a href="{% url 'studs_list' %}?subj_id={{ subject.id }}" class="cancel-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/rater.js' %}"></script>
+{% endblock %}

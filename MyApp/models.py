@@ -1,66 +1,100 @@
-
 from django.db import models
-
-# performance rating model
-class StudentSubjectRating(models.Model):
+# Model to store individual ratings for students
+class StudentRating(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    class_subject = models.ForeignKey('ClassSubject', on_delete=models.CASCADE)
-    reading = models.PositiveSmallIntegerField(default=0)
-    writing = models.PositiveSmallIntegerField(default=0)
-    assignments = models.PositiveSmallIntegerField(default=0)
-    class_activity = models.PositiveSmallIntegerField(default=0)
-    complaints = models.TextField(blank=True)
+    subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
+    rating_title = models.ForeignKey('RatingTitle', on_delete=models.CASCADE)
+    value_numerical = models.IntegerField(blank=True, null=True)
+    value_text = models.TextField(blank=True, null=True)
+    rated_by = models.ForeignKey('Teacher', on_delete=models.SET_NULL, null=True, blank=True)
     rated_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student} - {self.class_subject}"
+        return f"{self.student} - {self.rating_title} ({self.subject})"
 
-# Students model
-class Student(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    date_of_birth = models.DateField()
-    enrollment_date = models.DateField(auto_now_add=True)
-    class_room = models.ForeignKey('ClassRoom', on_delete=models.SET_NULL, null=True, blank=True)
-    parent_name = models.CharField(max_length=100)
-    parent_contact = models.TextField(help_text="Add multiple phone numbers separated by commas or new lines.")
-    parent_email = models.EmailField(blank=True, help_text="Parent email (optional)")
-    image = models.ImageField(upload_to='student_images/', blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-
-# Teachers model
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    contact = models.CharField(max_length=20)
-    subject_specialization = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    firstname = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50)
+    address = models.TextField()
+    specialization = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=128)  # Store hashed password in production
     image = models.ImageField(upload_to='teacher_images/', blank=True, null=True)
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    ROLE_CHOICES = [
+        ('teacher', 'Teacher'),
+        ('admin', 'Admin'),
+    ]
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='teacher')
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.firstname} {self.lastname}"
 
-
-# Class model like 1 2 3 etc
-class ClassRoom(models.Model):
-    name = models.CharField(max_length=50)  
-    class_teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True, related_name='class_teacher')
+class Class(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=50, unique=True)
+    class_teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
-    @property
-    def number_of_students(self):
-        return self.student_set.count()
-
-#subjects eng nep etc
-class ClassSubject(models.Model):
-    class_room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE, related_name='class_subjects')
-    name = models.CharField(max_length=100)
-    assigned_teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
+class Student(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    firstname = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50)
+    roll_no = models.CharField(max_length=20, unique=True)
+    address = models.TextField()
+    dob = models.DateField()
+    student_class = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True)
+    parent_name = models.CharField(max_length=100)
+    parent_phone = models.CharField(max_length=20)
+    parent_email = models.EmailField()
+    profile_picture = models.ImageField(upload_to='student_profiles/', blank=True, null=True)
 
     def __str__(self):
-        teacher = self.assigned_teacher
-        teacher_name = f"{teacher.first_name} {teacher.last_name}" if teacher else "No teacher assigned"
-        return f"{self.name} - {self.class_room.name} ({teacher_name})"
+        return f"{self.firstname} {self.lastname}"
+
+class Subject(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    subject_class = models.ForeignKey('Class', on_delete=models.CASCADE, blank=True, null=True)
+    teacher = models.ForeignKey('Teacher', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
+class RatingTitle(models.Model):
+    NUMERICAL = 'numerical'
+    TEXT = 'text'
+    METHOD_CHOICES = [
+        (NUMERICAL, 'Numerical'),
+        (TEXT, 'Text'),
+    ]
+    rating_title = models.CharField(max_length=100)
+    method = models.CharField(max_length=10, choices=METHOD_CHOICES)
+    floor = models.IntegerField(blank=True, null=True)
+    ceiling = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if self.method == self.NUMERICAL:
+            if self.floor is None:
+                self.floor = 0
+            if self.ceiling is None:
+                self.ceiling = 5
+        else:
+            self.floor = None
+            self.ceiling = None
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.rating_title
+
+# Create your models here.

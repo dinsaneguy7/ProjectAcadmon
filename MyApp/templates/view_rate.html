@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}View Ratings | AcadMon{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/view_rate.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="view-rate-container">
+    <div class="view-rate-header">
+        <h1>Student Ratings</h1>
+        <div class="student-info">
+            <h2>{{ stud.firstname }} {{ stud.lastname }}</h2>
+            <div class="meta-info">
+                <span>Class: {{ stud.student_class.name }}</span>
+                <span>Roll No: {{ stud.roll_no }}</span>
+                <span>Subject: {{ subject.name }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-container">
+        <div class="filter-group">
+            <label for="time-range">Time Range:</label>
+            <select id="time-range" class="filter-select">
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+                <option value="custom">Custom Range</option>
+            </select>
+        </div>
+
+        <div class="filter-group custom-range-group" style="display:none;">
+            <label for="start-date">From:</label>
+            <input type="text" id="start-date" class="date-picker" placeholder="Start Date">
+            
+            <label for="end-date">To:</label>
+            <input type="text" id="end-date" class="date-picker" placeholder="End Date">
+        </div>
+
+        <div class="filter-group">
+            <label for="group-by">Group By:</label>
+            <select id="group-by" class="filter-select">
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+            </select>
+        </div>
+
+        <button id="apply-filters" class="apply-btn">Apply Filters</button>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="ratings-chart"></canvas>
+    </div>
+
+    <div class="ratings-table-container">
+        <table class="ratings-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    {% for title in rating_titles %}
+                    <th>{{ title.rating_title }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, ratings in rating_data.items %}
+                <tr>
+                    <td>{{ date|date:"M d, Y" }}</td>
+                    {% for title in rating_titles %}
+                    <td>{{ ratings|get_item:title.id|default:"-" }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script id="rating-dates" type="application/json">{{ rating_dates|json_script:"rating-dates" }}</script>
+<script id="rating-titles" type="application/json">{{ rating_titles|json_script:"rating-titles" }}</script>
+<script id="rating-values" type="application/json">{{ rating_values|json_script:"rating-values" }}</script>
+<script src="{% static 'js/view_rate.js' %}"></script>
+{% endblock %}

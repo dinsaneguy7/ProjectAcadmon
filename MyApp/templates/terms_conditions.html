@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms & Conditions | Academic Monitor{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/legal.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="legal-header">
+        <h1>Terms & Conditions</h1>
+        <div class="effective-date">Effective: {% now "F j, Y" %}</div>
+    </div>
+
+    <div class="notice">
+        <strong>NOTICE:</strong> These Terms & Conditions constitute a legally binding agreement between you and the owner of Academic Monitor. By accessing or using this platform, you acknowledge that you have read, understood, and agree to be bound by these terms.
+    </div>
+
+    <h2>1. Definitions</h2>
+    <p><strong>1.1 "Platform"</strong> refers to the Academic Monitor software, including all associated documentation, source code, and intellectual property.</p>
+    <p><strong>1.2 "Owner"</strong> refers to Vinay Poudyal, the sole creator and proprietor of Academic Monitor.</p>
+    <p><strong>1.3 "Licensee"</strong> refers exclusively to Puja Poudyal, the authorized user of this platform.</p>
+
+    <h2>2. Ownership & Intellectual Property</h2>
+    <p><strong>2.1</strong> All rights, title, and interest in and to the Platform, including all intellectual property rights, are and will remain the exclusive property of the Owner.</p>
+    <p><strong>2.2</strong> The Platform is protected by copyright, trademark, and other laws of Nepal.</p>
+
+    <h2>3. License Grant</h2>
+    <p><strong>3.1</strong> The Owner grants the Licensee a limited, non-exclusive, non-transferable, revocable license to use the Platform strictly for personal academic management purposes.</p>
+    <p><strong>3.2</strong> This license is expressly limited to the Licensee and may not be extended to any third party without written consent from the Owner.</p>
+
+    <h2>4. Restrictions</h2>
+    <p><strong>4.1</strong> The Licensee shall not:</p>
+    <ul>
+        <li>Copy, modify, or create derivative works of the Platform</li>
+        <li>Reverse engineer, decompile, or disassemble the Platform</li>
+        <li>Remove, alter, or obscure any proprietary notices</li>
+        <li>Transfer, sublicense, lease, lend, rent, or otherwise distribute the Platform</li>
+        <li>Make the Platform available to any third party</li>
+    </ul>
+
+    <div class="warning">
+        <strong>WARNING:</strong> Any unauthorized use, reproduction, or distribution of this Platform constitutes copyright infringement and may result in civil and criminal penalties.
+    </div>
+
+    <h2>5. Termination</h2>
+    <p><strong>5.1</strong> The Owner may terminate this license immediately upon any breach of these Terms by the Licensee.</p>
+    <p><strong>5.2</strong> Upon termination, the Licensee must cease all use of the Platform and destroy all copies.</p>
+
+    <h2>6. Governing Law</h2>
+    <p><strong>6.1</strong> These Terms shall be governed by and construed in accordance with the laws of the Federal Democratic Republic of Nepal(Nepal), without regard to its conflict of law provisions.</p>
+
+    <h2>7. Contact Information</h2>
+    <p>For any questions about these Terms, please contact:</p>
+    <p><strong>Vinay Poudyal</strong><br>
+    Email: <a href="mailto:dlunaticvinay@gmail.com">dlunaticvinay@gmail.com</a></p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/legal.js' %}"></script>
+{% endblock %}
